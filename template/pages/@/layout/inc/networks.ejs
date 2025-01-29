@@ -19,7 +19,8 @@ networksWithColors.forEach(([network, color]) => { %>
       aria-label="<%= network %>"
       style="color: <%= color %>"
     >
-      <i class="i-<%= network %>"></i>
+      <img src="/img/uploads/<%= network %>.svg"/>
+      
     </a>
   <% } %>
 <% }) %>

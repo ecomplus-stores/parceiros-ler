@@ -1,26 +1,26 @@
 {
-  "domain": "ecomplus-storefront.netlify.app",
+  "domain": "lojaler.com.br",
   "currency_symbol": "R$",
-  "primary_color": "",
+  "primary_color": "#084f53",
   "theme": {
     "bootswatch": "_",
-    "custom": "_"
+    "custom": "clean-white"
   },
-  "icons_font": "_",
-  "font_family": "_",
   "bg_color": "#ffffff",
-  "repository": "",
-  "logo": "/img/uploads/logo.png",
+  "repository": "ecomplus-stores/ministerioler",
+  "logo": "/img/uploads/jobflow.png",
   "name": "Loja LER",
   "short_name": "Loja LER",
   "lang": "pt_br",
   "currency": "BRL",
   "mini_logo": "",
-  "favicon": "/img/uploads/favicon.png",
+  "font_family": "_",
+  "favicon": "/img/uploads/fav.png",
+  "icons_font": "_",
   "country_code": "BR",
-  "secondary_color": "",
-  "icon": "/img/icon.png",
+  "secondary_color": "#4f4f4f",
+  "icon": "/img/uploads/fav.png",
   "store_id": 51504,
-  "description": "My PWA Shop",
-  "large_icon": "/img/large-icon.png"
+  "description": "ministerioler",
+  "large_icon": "/img/uploads/fav.png"
 }

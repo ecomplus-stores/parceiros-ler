@@ -1,20 +1,52 @@
 {
   "description": {
     "title": "",
-    "text": ""
+    "text": " "
   },
   "links_1": {
     "list_pages": true,
-    "title": "Páginas",
-    "list": []
+    "title": "Institucional",
+    "list": [
+      {
+        "text": "Blog"
+      },
+      {
+        "text": "Quem somos"
+      },
+      {
+        "text": "Fale conosco"
+      },
+      {
+        "text": "Política de troca"
+      },
+      {
+        "text": "Política de privacidade"
+      },
+      {
+        "text": "Termos e condições de compra"
+      }
+    ]
   },
   "links_2": {
     "list_categories": true,
-    "title": "Categorias",
-    "list": []
+    "title": "Livros",
+    "list": [
+      {
+        "text": "Ministério Pastoral"
+      },
+      {
+        "text": "Biografia"
+      },
+      {
+        "text": "Pregação"
+      },
+      {
+        "text": "Doutrina"
+      }
+    ]
   },
   "contacts": {
-    "title": "Contatos",
+    "title": "",
     "phone_wpp": true,
     "socials": true,
     "email": true,
@@ -22,10 +54,13 @@
   },
   "stamps": [
     {
-      "src": "/img/uploads/ssl-safe.png",
+      "src": "/img/uploads/image-20.png",
       "alt": "Secure connection",
       "width": 150,
       "height": 62
+    },
+    {
+      "src": "/img/uploads/image-21.png"
     }
   ],
   "payment_methods": {
@@ -37,5 +72,5 @@
     "hipercard": true,
     "boleto": true
   },
-  "credits": ""
-}
+  "credits": "Loja LER. Loja LER, uma marca do Ministério LER | CNPJ: 44.813.086/0001-47 © Todos os direitos reservados. 2023" 
+} 

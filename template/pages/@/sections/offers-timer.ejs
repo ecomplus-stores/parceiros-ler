@@ -12,33 +12,32 @@ if (Array.isArray(opt.offers) && opt.offers.length) {
 
   if (items.length) {
     %>
-    <section class="offers-timer my-4 my-lg-5">
-      <div class="container">
-        <div class="row">
-          <div
-            <% if (items.length <= 3) { %>
-              class="col-12 col-md-<%= (7 - items.length) %>"
-            <% } else { %>
-              class="col-12 col-lg-3"
-            <% } %>
-          >
+    <div class="bg-timer">
+    <section class="products-carousel offers-timer py-4 my-lg-5">
+        <div class="d-flex justify-content-between align-items-center pt-md-5 pt-4 pb-4">
+          <h4 class="products-carousel__title font-weight-700">
+            ⚡Oferta Relâmpago
+          </h4>
+         
+    
+          <div>
             <%- await include('@/sections/inc/timer', { _, opt }) %>
           </div>
-
-          <div class="col-12 col-md">
-            <div class="row">
-              <% for (let i = 0; i < items.length; i++) { %>
-                <div class="col-6 col-md">
-                  <%- await include('@/sections/inc/product-item', {
-                    _, opt: { item: items[i] }
-                  }) %>
-                </div>
-              <% } %>
-            </div>
-          </div>
         </div>
+        <div class="pb-5">
+        <ul class="ul__slides products-carousel__list">
+          <% for (let i = 0; i < items.length; i++) { %>
+            <li class="ul__slide products-carousel__item">
+              <%- await include('@/sections/inc/product-item', {
+                _, opt: { item: items[i] }
+              }) %>
+            </li>
+          <% } %>
+        </ul>        
       </div>
+      
     </section>
+  </div>
     <%
   }
 }

@@ -13,9 +13,9 @@ const logo = _.settings.logo
   <%- await include('@/head') %>
 </head>
 
-<body class="app">
+<body class="app <%= JSON.stringify(_.state) %>">
   <header class="app__header">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-12 col-sm-auto mb-2 mb-sm-0">
           <a href="/">
@@ -28,24 +28,63 @@ const logo = _.settings.logo
         </div>
 
         <div class="col">
-          <div class="app__contact">
-            <span class="d-none d-md-inline">
-              <%= _.dictionary('needHelpQn') %> <%= _.dictionary('callTo') %>
-            </span>
-            <% if (contacts.whatsapp) { %>
-              <span><%= contacts.whatsapp %></span>
+          <ul class="list-unstyled app_contacts d-none d-md-flex">
+            <% if (footer.contacts.phone_wpp) { %>
+              <% if (contacts.whatsapp) { %>
+                <li>
+                  <span class="footer__list-icon">
+                    <img src="../assets/footer_whatsapp.svg"/>
+                  </span>
+                  <a
+                    href="javascript:;"
+                    target="_blank"
+                    rel="noopener"
+                    class="whatsapp-link"
+                    data-tel="<%= contacts.whatsapp.replace(/\D/g, '') %>"
+                  >
+                    <small>Whatsapp</small>
+                    <%= contacts.whatsapp %>
+                  </a>
+                </li>
+              <% } %>
+              <% if (contacts.phone) { %>
+                <li>
+                  <span class="footer__list-icon">
+                    <img src="../assets/footer_phone.svg"/>
+                  </span>
+                  <a
+                    href="tel:+<%= contacts.phone.replace(/\D/g, '') %>"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <small>Telefone</small>
+                    <%= contacts.phone %>
+                  </a>
+                </li>
+              <% } %>
             <% } %>
-            <% if (contacts.phone) { %>
-              <span><%= contacts.phone %></span>
+            <% if (footer.contacts.email) { %>
+              <li>
+                <span class="footer__list-icon">
+                  <img src="../assets/footer_mail.svg"/>
+                </span>
+                <a href="mailto:<%= contacts.email %>" target="_blank" rel="noopener">
+                  <small>E-mail</small>
+                  <%= contacts.email %>
+                </a>
+              </li>
             <% } %>
-          </div>
-
-          <div class="app__safe">
-            <span class="app__safe-icon">
-              <i class="i-shield"></i>
-            </span>
-            <%= _.dictionary('safeEnvMsg') %>
-          </div>
+            
+            <li>
+              <span class="footer__list-icon">
+                <img src="../assets/footer_clock.svg"/>
+              </span>
+              <p>
+                <small>Horário de Atendimento</small>
+                Seg. à Sex. das 8h às 17h
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -57,28 +96,45 @@ const logo = _.settings.logo
     </div>
   </main>
 
-  <footer>
-    <div class="app__footer">
-      <div class="container-fluid">
-        <div class="app__stamps">
-          <%- await include(`@/sections/stamps`, { _, opt: { stamps: footer.stamps } }) %>
+  <footer class="footer">
+    <div class="app__footer  pt-4">
+      <div class="container">        
+        <div class="row justify-content-between align-items-start">
+          <div class="col-auto">
+            <h5 class="footer__title">Pagamento</h5>
+            <p class="footer__payment-methods">
+              <% Object.keys(footer.payment_methods).forEach(method => { %>
+                <% if (footer.payment_methods[method]) { %>
+                  <i class="pay-icon pay-icon--<%= method %>"></i>
+                <% } %>
+              <% }) %>
+            </p>              
+          </div>
+          <div class="col-auto">
+            <h5 class="footer__title">Segurança</h5>
+            <div class="footer__stamps">
+              <%- await include(`@/sections/stamps`, { _, opt: { stamps: footer.stamps } }) %>
+            </div>
+          </div>
+        </div>
+        <div class="footer__credits">
+          <div class="p-0 w-100">
+            <div class="row align-items-center credits">
+              <div class="col">
+                <span>
+                  <small>
+                    <%- footer.credits || `© ${_.store.name} / ${contacts.address} / ${contacts.doc_number}` %>
+                  </small>
+                </span>
+              </div>
+              <div class="col-auto"><%- await include('@/layout/inc/ecom-credits') %></div>
+            </div>
+          </div>      
         </div>
       </div>
     </div>
 
-    <div class="app__credits container">
-      <div>
-        <% if (footer.credits) { %>
-          <span><%= footer.credits %></span>
-        <% } else { %>
-          <span class="app__credits-name">© <%= _.settings.name %> </span>
-          <span class="app__credits-address"> - <%= contacts.address %> - </span>
-          <span class="app__credits-number"> <%= contacts.doc_number %></span>
-        <% } %>
-      </div>
-
-      <%- await include('@/layout/inc/ecom-credits') %>
-    </div>
+    
   </footer>
 
   <%- await include('@/json', { _ }) %>

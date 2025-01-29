@@ -24,11 +24,19 @@ if (items && !items.length) {
     childCategories.forEach(({ name }) => {
       categoryNames.push(name)
     })
-    search
+    try {
+      search
       .setCategoryNames(categoryNames)
       .setSortOrder(opt.sort)
-    await search.fetch()
-    items = await search.getItems()
+      await search.fetch()
+      items = await search.getItems()
+    } catch (error) {
+      search
+      .setCategoryNames(categoryNames.slice(0, 110))
+      .setSortOrder(opt.sort)
+      await search.fetch()
+      items = await search.getItems()
+    }
   }
 }
 %>

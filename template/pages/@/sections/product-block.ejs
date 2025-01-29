@@ -6,195 +6,202 @@ if (stamps && Array.isArray(stamps.stamps_list) && stamps.stamps_list.length) {
 }
 %>
 
+
+
 <div id="product-block" class="product-block my-4 mb-lg-5">
   <div class="container">
-    <section
-      id="product"
-      class="product"
-      data-to-render="true"
-      data-product-id="<%= _.state._id %>"
-      data-sku="<%= _.state.sku %>"
-    >
-      <div id="product-dock">
-        <!--
-          `TheProduct` should be rendered (hydrated) here:
-          https://developers.e-com.plus/storefront/@ecomplus/storefront-components/docs/TheProduct.html
-        -->
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-6 mb-4">
-          <!-- Picture(s) gallery will be inserted dynamically within `TheProduct` -->
-          <% if (_.state.pictures) { %>
-            <% const imgObj = _.ecomUtils.img(_.state, null, 'big') %>
-            <% if (imgObj) { %>
-              <% const [width, height] = (imgObj.size || '').split('x').map(px => parseInt(px, 10)) %>
-              <div id="product-gallery">
-                <div data-slot="stamps">
-                  <% if (Array.isArray(stampsList) && stampsList.length) { %>
-                    <div class="product__stamps">
-                      <% for (stamp of stampsList) { 
-                        if (stamp.img && (!stamp.skus || !stamp.skus.length || stamp.skus.includes(_.state.sku))) {
-                          %>
-                          <span class="product__stamps-<%= stamp.id && stamp.id.toLowerCase().replace(/\s/g, '-') %>">
-                            <img src="<%= stamp.img %>" alt="<%= stamp.id %>">
-                          </span>
-                        <% } %>
-                      <% } %>
-                    </div>
-                  <% } %>
-                </div>
-                <div
-                  class="product__picture"
-                  <% if (width) { %>
-                    style="max-width: <%= width %>px"
-                  <% } %>  
-                >
-                  <picture
-                    <% if (width && height) { %>
-                      class="picture"
-                      style="--aspect-ratio-pc: <%= Math.round(height * 100 * 10000 / width) / 10000 %>%"
-                    <% } %>
-                  >
-                    <source
-                      srcset="<%= _.ecomUtils.img(_.state).url %>"
-                      type="image/webp"
-                      media="(max-width: 399.98px)"
-                    >
-                    <source
-                      srcset="<%= imgObj.url %>"
-                      type="image/webp"
-                      media="(min-width: 400px)"
-                    >
-                    <img
-                      src="<%= imgObj.url.replace(/\.webp$/, '') %>"
-                      alt="<%= imgObj.alt || _.state.name %>"
-                      <% if (imgObj.url.startsWith('https://ecoms1.com/')) { %>
-                        crossorigin="anonymous"
-                      <% } %>
-                      <% if (height) { %>
-                        width="<%= width %>"
-                        height="<%= height %>"
-                      <% } %>
-                    >
-                  </picture>
-                </div>
-              </div>
-            <% } %>
-          <% } %>
-          <!-- Custom additional code on bottom of images gallery -->
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10">
+        <section
+        id="product"
+        class="product"
+        data-to-render="true"
+        data-product-id="<%= _.state._id %>"
+        data-sku="<%= _.state.sku %>"
+      >
+        <div id="product-dock">
+          <!--
+            `TheProduct` should be rendered (hydrated) here:
+            https://developers.e-com.plus/storefront/@ecomplus/storefront-components/docs/TheProduct.html
+          -->
         </div>
-
-        <div class="col">
-          <h1 class="product__name">
-            <%= _.ecomUtils.name(_.state) %>
-          </h1>
-          <p class="product__sku">
-            COD: <%= _.state.sku %>
-          </p>
-
-          <div id="product-actions">
-            <div id="product-loading">
-              <% if (_.state.available && _.state.visible && _.ecomUtils.inStock(_.state)) { %>
-                <div class="product__price prices prices--big">
-                  <strong class="prices__value">
-                    <%= _.ecomUtils.formatMoney(_.ecomUtils.price(_.state)) %>
-                  </strong>
-                </div>
-              <% } %>
-
-              <% if (_.state.variations && _.state.variations.length) { %>
-                <div data-slot="variations-info">
-                  <!-- Custom info for products with variations, such as sizes table link -->
-                  <% if (opt.size_guide && opt.size_guide.image) { %>
-                    <% const sizeGuideTitle = opt.size_guide.title || _.dictionary('sizeGuide') %>
-                    <div class="mb-3">
-                      <a 
-                        href="javascript:;"
-                        data-toggle="modal"
-                        data-target="#modal-size-guide"
-                      >
-                        <i class="i-ruler mr-1"></i> <%= sizeGuideTitle %>
-                      </a>
-                    </div>
-                    <div 
-                      class="modal modal-center fade" 
-                      id="modal-size-guide" 
-                      tabindex="-1" 
-                      style="display: none;" 
-                      aria-hidden="true"
-                    >
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header d-flex align-items-center justify-content-between">
-                            <h5 class="modal-title">
-                              <%= sizeGuideTitle %>
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <img 
-                              class="img-fluid" 
-                              src="<%= opt.size_guide.image %>" 
-                              alt="<%= sizeGuideTitle %>"
-                            >
-                          </div>
-                        </div>
+  
+        <div class="row">
+          <div class="col-12 col-md-6 mb-4">
+            <!-- Picture(s) gallery will be inserted dynamically within `TheProduct` -->
+            <% if (_.state.pictures) { %>
+              <% const imgObj = _.ecomUtils.img(_.state, null, 'big') %>
+              <% if (imgObj) { %>
+                <% const [width, height] = (imgObj.size || '').split('x').map(px => parseInt(px, 10)) %>
+                <div id="product-gallery">
+                  <div data-slot="stamps">
+                    <% if (Array.isArray(stampsList) && stampsList.length) { %>
+                      <div class="product__stamps">
+                        <% for (stamp of stampsList) { 
+                          if (stamp.img && (!stamp.skus || !stamp.skus.length || stamp.skus.includes(_.state.sku))) {
+                            %>
+                            <span class="product__stamps-<%= stamp.id && stamp.id.toLowerCase().replace(/\s/g, '-') %>">
+                              <img src="<%= stamp.img %>" alt="<%= stamp.id %>">
+                            </span>
+                          <% } %>
+                        <% } %>
                       </div>
-                    </div>
-                  <% } %>
-                </div>
-              <% } %>
-
-              <div class="spinner-border m-4" role="status">
-                <span class="sr-only">Loading...</span>
-              </div>
-
-              <div class="product__buy">
-                <button
-                  type="button"
-                  class="btn btn-lg btn-primary"
-                  onclick="ecomCart.addProduct(storefront.context.body)"
-                  <% if (_.state.variations && _.state.variations.length) { %>
-                    disabled
-                  <% } %>
-                >
-                  <div data-slot="buy-button-content">
-                    <i class="i-shopping-bag mr-1"></i>
-                    <% if (_.state.kit_composition && _.state.kit_composition.length) { %>
-                      <%= _.dictionary('buyKit') %>
-                    <% } else { %> 
-                      <% let buyText %>
-                      <% if (Array.isArray(_.widgets)) { %>
-                        <% const productWidget = _.widgets.find(item => item.pkg === '@ecomplus/widget-product') %>
-                        <% buyText = productWidget && productWidget.options.buyText %>
-                      <% } %>
-                      <%= buyText || _.dictionary('buy') %>
                     <% } %>
                   </div>
-                </button>
-              </div>
-            </div>
+                  <div
+                    class="product__picture"
+                    <% if (width) { %>
+                      style="max-width: <%= width %>px"
+                    <% } %>  
+                  >
+                    <picture
+                      <% if (width && height) { %>
+                        class="picture"
+                        style="--aspect-ratio-pc: <%= Math.round(height * 100 * 10000 / width) / 10000 %>%"
+                      <% } %>
+                    >
+                      <source
+                        srcset="<%= _.ecomUtils.img(_.state).url %>"
+                        type="image/webp"
+                        media="(max-width: 399.98px)"
+                      >
+                      <source
+                        srcset="<%= imgObj.url %>"
+                        type="image/webp"
+                        media="(min-width: 400px)"
+                      >
+                      <img
+                        src="<%= imgObj.url.replace(/\.webp$/, '') %>"
+                        alt="<%= imgObj.alt || _.state.name %>"
+                        <% if (imgObj.url.startsWith('https://ecoms1.com/')) { %>
+                          crossorigin="anonymous"
+                        <% } %>
+                        <% if (height) { %>
+                          width="<%= width %>"
+                          height="<%= height %>"
+                        <% } %>
+                      >
+                    </picture>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+            <!-- Custom additional code on bottom of images gallery -->
           </div>
-
-          <% if (_.state.short_description) { %>
-            <p class="product__info mt-3 lead">
-              <%= _.state.short_description %>
-            </p>
-          <% } %>
+  
+          <div class="col">
+            <div class="pl-0 pl-md-4">
+              <h1 class="product__name">
+                <%= _.ecomUtils.name(_.state) %>
+              </h1>
+              <p class="product__sku">
+                COD: <%= _.state.sku %>
+              </p>
+              <% if (_.state.short_description) { %>
+                <p class="product__info mt-3 mb-4 pt-4 lead">
+                  <%= _.state.short_description %>
+                </p>
+              <% } %>
+              <div id="product-actions">
+                <div id="product-loading">
+                  <% if (_.state.available && _.state.visible && _.ecomUtils.inStock(_.state)) { %>
+                    <div class="product__price prices prices--big">
+                      
+                    </div>
+                  <% } %>
+    
+                  <% if (_.state.variations && _.state.variations.length) { %>
+                    <div data-slot="variations-info">
+                      <!-- Custom info for products with variations, such as sizes table link -->
+                      <% if (opt.size_guide && opt.size_guide.image) { %>
+                        <% const sizeGuideTitle = opt.size_guide.title || _.dictionary('sizeGuide') %>
+                        <div class="mb-3">
+                          <a 
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#modal-size-guide"
+                          >
+                            <i class="i-ruler mr-1"></i> <%= sizeGuideTitle %>
+                          </a>
+                        </div>
+                        <div 
+                          class="modal modal-center fade" 
+                          id="modal-size-guide" 
+                          tabindex="-1" 
+                          style="display: none;" 
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header d-flex align-items-center justify-content-between">
+                                <h5 class="modal-title">
+                                  <%= sizeGuideTitle %>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <img 
+                                  class="img-fluid" 
+                                  src="<%= opt.size_guide.image %>" 
+                                  alt="<%= sizeGuideTitle %>"
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% } %>
+                    </div>
+                  <% } %>
+    
+                  <div class="spinner-border m-4" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+    
+                  <div class="product__buy">
+                    <button
+                      type="button"
+                      class="btn btn-lg btn-primary"
+                      onclick="ecomCart.addProduct(storefront.context.body)"
+                      <% if (_.state.variations && _.state.variations.length) { %>
+                        disabled
+                      <% } %>
+                    >
+                      <div data-slot="buy-button-content">
+                        <% if (_.state.kit_composition && _.state.kit_composition.length) { %>
+                          Comprar Kit
+                        <% } else { %> 
+                          <% let buyText %>
+                          <% if (Array.isArray(_.widgets)) { %>
+                            <% const productWidget = _.widgets.find(item => item.pkg === '@ecomplus/widget-product') %>
+                            <% buyText = productWidget && productWidget.options.buyText %>
+                          <% } %>
+                          <span>Adicionar ao carrinho</span>
+                          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.33333 2.33337H3.85719C4.14421 2.33337 4.28772 2.33337 4.40321 2.38615C4.50498 2.43267 4.59123 2.50747 4.65167 2.60164C4.72025 2.70851 4.74055 2.85058 4.78114 3.13471L5.33333 7.00004M5.33333 7.00004L6.56053 16.02C6.71627 17.1647 6.79414 17.737 7.06778 18.1678C7.3089 18.5474 7.65459 18.8492 8.06324 19.037C8.527 19.25 9.1046 19.25 10.2598 19.25H20.244C21.3436 19.25 21.8934 19.25 22.3428 19.0522C22.739 18.8777 23.0788 18.5965 23.3243 18.24C23.6027 17.8356 23.7056 17.2955 23.9114 16.2153L25.4556 8.10801C25.528 7.72782 25.5642 7.53772 25.5118 7.38912C25.4657 7.25877 25.3749 7.14901 25.2555 7.07939C25.1193 7.00004 24.9258 7.00004 24.5388 7.00004H5.33333ZM11.6667 24.5C11.6667 25.1444 11.1443 25.6667 10.5 25.6667C9.85566 25.6667 9.33333 25.1444 9.33333 24.5C9.33333 23.8557 9.85566 23.3334 10.5 23.3334C11.1443 23.3334 11.6667 23.8557 11.6667 24.5ZM21 24.5C21 25.1444 20.4777 25.6667 19.8333 25.6667C19.189 25.6667 18.6667 25.1444 18.6667 24.5C18.6667 23.8557 19.189 23.3334 19.8333 23.3334C20.4777 23.3334 21 23.8557 21 24.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+    
+                        <% } %>
+                      </div>
+                    </button>                  
+                  </div>                
+                </div>
+              </div>
+            </div>  
+            
+          </div>
         </div>
-      </div>
-
+        <%- await include('@/helpers/widgets-append', {
+          _, opt: {}, field: 'productSlots'
+        }) %>
+      </section>
+  
       <%- await include('@/helpers/widgets-append', {
-        _, opt: {}, field: 'productSlots'
+        _, opt: {}, field: 'productBlockAppend'
       }) %>
-    </section>
-
-    <%- await include('@/helpers/widgets-append', {
-      _, opt: {}, field: 'productBlockAppend'
-    }) %>
+      </div>
+    </div>    
   </div>
 </div>
 
