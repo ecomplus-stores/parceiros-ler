@@ -206,17 +206,7 @@ export default {
     },
 
     suggestedItems () {
-      const allowedSkus = window.allow_sku || [];
-      const deniedSkus = window.deny_sku || [];
-      let result = this.resultItems.length ? this.resultItems : this.popularItems
-      if(allowedSkus.length > 0){
-        result = result.filter(item => allowedSkus.includes(item.sku))
-      }
-      if(deniedSkus.length > 0){
-        result = result.filter(item => !deniedSkus.includes(item.sku))
-      }
-      console.log(deniedSkus,`result`,result)
-      return result
+      return this.resultItems.length ? this.resultItems : this.popularItems
     },
 
     loadObserver () {
