@@ -10,6 +10,10 @@
     ],
     "rewrites": [
       {
+        "source": "/__api/**",
+        "function": "api"
+      },
+      {
         "source": "**/!(*(*.)js|*(*.)css|*(*.)ico|*(*.)png|*(*.)gif|*(*.)jpg|*(*.)jpeg|*(*.)webp|*(*.)svg|*(*.)woff|*(*.)woff2|*(*.)otf|*(*.)ttf|*(*.)eot)",
         "function": "ssr"
       },
