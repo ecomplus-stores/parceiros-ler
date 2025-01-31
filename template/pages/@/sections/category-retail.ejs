@@ -3,48 +3,21 @@ const search = new _.EcomSearch()
 search
   .setCategoryNames([_.state.name])
   .setSortOrder(opt.sort)
-let items
-try {
-  await search.fetch()
-  items = search.getItems()
-} catch (err) {
-  if (err.response && err.response.status === 404) {
-    console.error(err)
-  } else {
-    throw err
-  }
-}
 const categoryNames = [_.state.name]
-
-if (items && !items.length) {
-  const childCategories = _.categories.filter(({ parent }) => {
-    return parent && parent._id === _.state._id
+const childCategories = _.categories.filter(({ parent }) => {
+  return parent && parent._id === _.state._id
+})
+if (childCategories.length) {
+  childCategories.forEach(({ name }) => {
+    categoryNames.push(name)
   })
-  if (childCategories.length) {
-    childCategories.forEach(({ name }) => {
-      categoryNames.push(name)
-    })
-    try {
-      search
-      .setCategoryNames(categoryNames)
-      .setSortOrder(opt.sort)
-      await search.fetch()
-      items = await search.getItems()
-    } catch (error) {
-      search
-      .setCategoryNames(categoryNames.slice(0, 110))
-      .setSortOrder(opt.sort)
-      await search.fetch()
-      items = await search.getItems()
-    }
-  }
 }
 %>
 
 <div class="category-retail">
   <%- await include('@/sections/inc/retail-grid', {
     _, opt: {
-      items,
+      items: [],
       search,
       category_names: categoryNames,
       sort: opt.sort

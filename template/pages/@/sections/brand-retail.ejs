@@ -6,6 +6,7 @@ search.setBrandNames([_.state.name])
 <div class="brand-retail">
   <%- await include('@/sections/inc/retail-grid', {
     _, opt: {
+      items: [],
       search,
       brand_names: [_.state.name],
       sort: opt.sort
