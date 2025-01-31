@@ -83,6 +83,21 @@
             </slot>
           </div>
 
+          <div v-else-if="!isWarehouseChecked && !ecomPassport.checkLogin()">
+            Acesse sua conta para verificar o preço e disponibilidade
+            <hr>
+            <button @click="toggleLogin" class="btn btn-primary">
+              Entrar
+            </button>
+          </div>
+
+          <div
+            v-else-if="!isWarehouseChecked"
+            class="product__out-of-stock"
+          >
+            Este livro não está disponível no seu local
+          </div>
+
           <div
             v-else-if="!isInStock"
             class="product__out-of-stock"
@@ -466,7 +481,7 @@
       leave-active-class="animated fadeOut fast" 
     >
       <div
-        v-show="isStickyBuyVisible"
+        v-show="isStickyBuyVisible && isWarehouseChecked"
         ref="sticky" 
         class="product__sticky"
       >

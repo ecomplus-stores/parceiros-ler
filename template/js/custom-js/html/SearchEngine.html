@@ -196,6 +196,17 @@
     enter-active-class="animated fadeInDown"
     leave-active-class="animated fadeOutUp fast position-absolute"
   >
+    <p v-if="!isCustomerLogged">
+      <button @click="toggleLogin" class="btn btn-primary">
+        Entre para ver os produtos
+      </button>
+    </p>
+  </transition>
+
+  <transition
+    enter-active-class="animated fadeInDown"
+    leave-active-class="animated fadeOutUp fast position-absolute"
+  >
     <div
       v-if="isNavVisible || isFilterable"
       class="search-engine__nav"

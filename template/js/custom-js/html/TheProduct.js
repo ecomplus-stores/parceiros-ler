@@ -164,7 +164,8 @@ import {
         paymentOptions: [],
         customizations: [],
         kitItems: [],
-        currentTimer: null
+        currentTimer: null,
+        isWarehouseChecked: false
       }
     },
   
@@ -301,9 +302,18 @@ import {
       }
     },
   
-    methods: {
-      getVariationsGrids,
-      getSpecValueByText,
+  methods: {
+    getVariationsGrids,
+    getSpecValueByText,
+
+    toggleLogin () {
+      const userBtn = document.getElementById('user-button')
+      if (userBtn) {
+        userBtn.click()
+        return
+      }
+      window.location.href = '/app/#/account/'
+    },
   
       setBody (data) {
         this.body = {
@@ -541,6 +551,21 @@ import {
         this.fetchProduct().then(presetQntToBuy)
       }
       this.isFavorite = checkFavorite(this.body._id || this.productId, this.ecomPassport)
+      const checkWarehouse = () => {
+        const customer = ecomPassport.getCustomer()
+        if (customer && customer.group) {
+          const { inventory } = this.body
+          if (inventory && inventory[customer.group] > 0) {
+            this.isWarehouseChecked = true
+            return
+          }
+        }
+        this.isWarehouseChecked = false
+      }
+      checkWarehouse()
+      ecomPassport.on('login', () => {
+        checkWarehouse()
+      })
     },
   
     mounted () {

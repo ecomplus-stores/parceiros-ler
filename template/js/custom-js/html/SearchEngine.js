@@ -26,6 +26,7 @@ import {
 import { i18n } from '@ecomplus/utils'
 import lozad from 'lozad'
 import EcomSearch from '@ecomplus/search-engine'
+import ecomPassport from '@ecomplus/passport-client'
 import { Portal } from '@linusborg/vue-simple-portal'
 import ABackdrop from '@ecomplus/storefront-components/src/ABackdrop.vue'
 import ProductCard from '@ecomplus/storefront-components/src/ProductCard.vue'
@@ -129,7 +130,8 @@ export default {
       hasSetPopularItems: false,
       isAsideVisible: false,
       searchFilterId: 0,
-      authorPage:false,
+      authorPage: false,
+      isCustomerLogged: ecomPassport.checkLogin()
     }
   },
 
@@ -193,10 +195,11 @@ export default {
 
     isNavVisible () {
       return this.hasSearched && this.isFilterable &&
-        (this.isSearching ||  this.hasSelectedOptions)
+        (this.isSearching || this.hasSelectedOptions)
     },
 
     isResultsVisible () {
+      if (!this.isCustomerLogged) return false
       return (this.hasSearched && !this.isSearching) || this.suggestedItems.length
     },
 
@@ -225,7 +228,15 @@ export default {
   },
 
   methods: {
-   
+    toggleLogin () {
+      const userBtn = document.getElementById('user-button')
+      if (userBtn) {
+        userBtn.click()
+        return
+      }
+      window.location.href = '/app/#/account/'
+    },
+
     fetchItems (isRetry, isPopularItems) {
       const ecomSearch = isPopularItems ? new EcomSearch() : this.ecomSearch
       const requestId = Date.now()
@@ -589,13 +600,16 @@ export default {
      }
     //}, 500)
   },
+
   created () {
     resetEcomSearch(this)
     this.handlePresetedOptions()
     this.fetchItems()
-    //console.log(`categories.name`,this.categories)
-    if(this.categories.slice(0,1)){
+    if (this.categories.slice(0, 1)) {
       this.authorPage = true
     }
+    ecomPassport.on('login', () => {
+      this.isCustomerLogged = true
+    })
   }
 }
