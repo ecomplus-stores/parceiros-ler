@@ -1,25 +1,26 @@
 import {
-    i19add$1ToEarn,
-    i19calculateShipping,
-    i19freeShipping,
-    i19zipCode
-  } from '@ecomplus/i18n'
-  
-  import {
-    $ecomConfig,
-    i18n,
-    price as getPrice,
-    formatMoney
-  } from '@ecomplus/utils'
-  
-  import { modules } from '@ecomplus/client'
-  import sortApps from '@ecomplus/storefront-components/src/js/helpers/sort-apps'
-  import CleaveInput from 'vue-cleave-component'
-  import ShippingLine from '@ecomplus/storefront-components/src/ShippingLine.vue'
-  
-  const localStorage = typeof window === 'object' && window.localStorage
-  const zipStorageKey = 'shipping-to-zip'
-  
+  i19add$1ToEarn,
+  i19calculateShipping,
+  i19freeShipping,
+  i19zipCode
+} from '@ecomplus/i18n'
+
+import {
+  $ecomConfig,
+  i18n,
+  price as getPrice,
+  formatMoney
+} from '@ecomplus/utils'
+
+import { modules } from '@ecomplus/client'
+import ecomPassport from '@ecomplus/passport-client'
+import sortApps from '@ecomplus/storefront-components/src/js/helpers/sort-apps'
+import CleaveInput from 'vue-cleave-component'
+import ShippingLine from '@ecomplus/storefront-components/src/ShippingLine.vue'
+
+const localStorage = typeof window === 'object' && window.localStorage
+const zipStorageKey = 'shipping-to-zip'
+
   const reduceItemBody = itemOrProduct => {
     const shippedItem = {}
     ;[
@@ -123,11 +124,19 @@ import {
           : null
       },
   
-      shippingServicesFinal () {
-        return this.shippingServices.filter(service => 
-          (service.app_id === 1253 && (service.service_code == '20133' || service.service_code == '6060')) || service.app_id !== 1253
-        )
-      },
+    shippingServicesFinal () {
+      return this.shippingServices.filter(service => {
+        if (service.app_id !== 1253) return false
+        const customer = ecomPassport.getCustomer()
+        if (!customer || !customer.group) return false
+        const shippingLine = service.shipping_line
+        if (service.service_code === 'PICKUP') {
+          return shippingLine.delivery_instructions &&
+          shippingLine.delivery_instructions.includes(`(${customer.group})`)
+        }
+        return shippingLine.pick_up && service.service_code === customer.group
+      })
+    },
   
       productionDeadline () {
         let maxDeadline = 0
