@@ -537,8 +537,24 @@ export default {
   },
 
   created () {
+    const checkWarehouse = () => {
+      const customer = ecomPassport.getCustomer()
+      if (customer && customer.group) {
+        const { inventory } = this.body
+        if (inventory && inventory[customer.group] > 0) {
+          this.isWarehouseChecked = true
+          this.body.quantity = inventory[customer.group]
+          return
+        }
+      }
+      this.isWarehouseChecked = false
+    }
+    ecomPassport.on('login', () => {
+      checkWarehouse()
+    })
     const presetQntToBuy = () => {
       this.qntToBuy = this.body.min_quantity || 1
+      checkWarehouse()
     }
     if (this.product) {
       this.body = this.product
@@ -551,21 +567,7 @@ export default {
       this.fetchProduct().then(presetQntToBuy)
     }
     this.isFavorite = checkFavorite(this.body._id || this.productId, this.ecomPassport)
-    const checkWarehouse = () => {
-      const customer = ecomPassport.getCustomer()
-      if (customer && customer.group) {
-        const { inventory } = this.body
-        if (inventory && inventory[customer.group] > 0) {
-          this.isWarehouseChecked = true
-          return
-        }
-      }
-      this.isWarehouseChecked = false
-    }
     checkWarehouse()
-    ecomPassport.on('login', () => {
-      checkWarehouse()
-    })
   },
 
   mounted () {

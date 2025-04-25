@@ -13,6 +13,7 @@ import {
 } from '@ecomplus/utils'
 
 import ecomCart from '@ecomplus/shopping-cart'
+import ecomPassport from '@ecomplus/passport-client'
 import ALink from '@ecomplus/storefront-components/src/ALink.vue'
 import APicture from '@ecomplus/storefront-components/src/APicture.vue'
 import ItemCustomizations from '@ecomplus/storefront-components/src/ItemCustomizations.vue'
@@ -31,7 +32,7 @@ export default {
       type: Object,
       required: true
     },
-    minicart: Boolean,
+    isMinicart: Boolean,
     nameMaxLength: {
       type: Number,
       default: 35
@@ -100,10 +101,16 @@ export default {
       if (this.item.available === false) {
         return 0
       }
-      const maxQuantity = this.item.max_quantity
+      let inventoryQnt = 0
+      const customer = ecomPassport.getCustomer()
+      if (customer && customer.group) {
+        const { inventory } = this.item
+        inventoryQnt = inventory[customer.group]
+      }
+      const maxQuantity = inventoryQnt
       return typeof maxQuantity === 'number' && maxQuantity >= 0
         ? maxQuantity
-        : 9999999
+        : 0
     }
   },
 
@@ -133,7 +140,7 @@ export default {
 
     updateInputType () {
       this.validateQuantity()
-      this.canInputSelect = this.isIntegerQnt && this.quantity > 0 && this.quantity <= 10
+      this.canInputSelect = this.isIntegerQnt && this.quantity > 0 && this.isMinicart
     },
 
     remove () {
