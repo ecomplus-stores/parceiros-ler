@@ -609,6 +609,11 @@ export default {
       this.authorPage = true
     }
     ecomPassport.on('login', () => {
+      if (!this.isCustomerLogged) {
+        this.$nextTick(() => {
+          this.fetchItems()
+        })
+      }
       this.isCustomerLogged = true
     })
   }
