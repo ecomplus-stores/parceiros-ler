@@ -2887,3 +2887,37 @@ body .search-engine__aside{
 .product-card__buy {
     display: none;
 }
+
+
+
+#entreSection{
+    display:flex;
+    justify-content: center;
+    gap:1rem;
+    align-items: center;
+    flex-direction:column;
+    img{max-width:100%;width: 300px;}
+
+    strong{
+        font-size: 3rem;
+        max-width: 100%;
+        width: 900px;
+        text-align: center;
+        line-height: initial;
+        font-weight: 600;
+    }
+    button{
+        border-radius: .25rem;
+        padding: 1rem 2rem;
+        font-size: 18px;
+    }
+}
+@media(max-width:990px){
+    #entreSection{
+        img{width: 100%;}
+        strong{font-size: 2rem;}
+        button{font-size: 16px;}
+    }
+}
+
+.not-logged .pagination{display:none!important}

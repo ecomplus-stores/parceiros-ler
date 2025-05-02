@@ -194,6 +194,12 @@ $(document).ready(function(){
   $('[username]').text(client.display_name || `Visitante` )
 
   placeFavoritesAside();
+
+  let checkLogin = EcomPassport.ecomPassport.checkLogin()
+  if(!checkLogin){
+    $('#mobile-home-functions,.header__toggler,.header__nav').remove()
+    $('body').addClass('not-logged')
+  }
 });
 
 $(window).resize(function(){

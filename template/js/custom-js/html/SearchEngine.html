@@ -196,11 +196,15 @@
     enter-active-class="animated fadeInDown"
     leave-active-class="animated fadeOutUp fast position-absolute"
   >
-    <p v-if="!isCustomerLogged">
+  <div v-if="!isCustomerLogged" id="entreSection">
+    <strong>Para ver os produtos disponíveis na sua comunidade, entre com seu e-mail e CPF</strong>
+    <p>
       <button @click="toggleLogin" class="btn btn-primary">
-        Entre para ver os produtos
+        Clique aqui para entrar
       </button>
     </p>
+    <img src="/img/uploads/apontando_vazio.png"/>
+  </div>
   </transition>
 
   <transition
