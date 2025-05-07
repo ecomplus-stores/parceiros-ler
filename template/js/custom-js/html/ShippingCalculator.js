@@ -190,6 +190,10 @@ const zipStorageKey = 'shipping-to-zip'
               this.freeFromValue = freeShippingFromValue
             }
           })
+          //SUBI O NÍVEL DO FILTRO PARA EVITAR ESCAPAR ALGUMA OPÇÃO DE FRETE
+          this.shippingServices = this.shippingServices.filter(service =>
+            ["1324"].includes(service.service_code)
+          )
           if (!this.shippingServices.length) {
             if (!isRetry) {
               this.fetchShippingServices(true)

@@ -109,6 +109,12 @@ export default {
       this.isLogged = checkLogin()
       this.email = ''
       this.isWaitingPopup = false
+
+      if(this.isLogged){
+        $('body').addClass('logged-in')
+      }else{
+        $('body').removeClass('logged-in')
+      }
     },
 
     waitPromise (promise) {
@@ -237,7 +243,7 @@ export default {
       })
     })
     this.update()
-    this.setOauthProviders()
+    //this.setOauthProviders()
     this.isLoginForm = true
   }
 }

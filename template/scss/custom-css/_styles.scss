@@ -2919,5 +2919,9 @@ body .search-engine__aside{
         button{font-size: 16px;}
     }
 }
-
-.not-logged .pagination{display:none!important}
+.login-modal__visitor-info,
+body:not(.logged-in){
+    #mobile-home-functions,.header__toggler,
+    .header__nav,
+    .pagination{display:none!important}
+} 
