@@ -110,11 +110,11 @@ export default {
       this.email = ''
       this.isWaitingPopup = false
 
-      if(this.isLogged){
-        $('body').addClass('logged-in')
-      }else{
-        $('body').removeClass('logged-in')
-      }
+      // if(this.isLogged){
+      //   $('body').addClass('logged-in')
+      // }else{
+      //   $('body').addClass('logged-out')
+      // }
     },
 
     waitPromise (promise) {

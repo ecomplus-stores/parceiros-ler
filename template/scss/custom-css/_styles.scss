@@ -2920,8 +2920,19 @@ body .search-engine__aside{
     }
 }
 .login-modal__visitor-info,
-body:not(.logged-in){
+body.logged-out{
     #mobile-home-functions,.header__toggler,
     .header__nav,
     .pagination{display:none!important}
 } 
+
+[data-service-code="1324"]{
+    + small{text-align:left}
+    > small{display: none!important;}
+    
+}
+
+.shipping-calculator__services .list-group-item.list-group-item-action.active{
+    background: #fff;
+    *{color: var(--txt)!important;}
+}

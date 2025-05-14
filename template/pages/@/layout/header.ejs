@@ -106,8 +106,10 @@ const hasAllDepartments = header.menu_all_departments
           <%- await include('@/layout/inc/logo', { _ }) %>
         </a>
       </div>
-
-      <% if (categories && categories.length) { %>
+      <div class="d-none d-lg-block col ">
+        
+      </div>
+      <% if (categories && categories.length && 1 != 1) { %>
         <div class="d-none d-lg-block col header__nav-block">
           <nav class="header__nav<%= isCategoriesNavFull ? ' header__nav--full' : '' %>">
             <% if (hasAllDepartments) { %>

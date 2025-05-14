@@ -125,17 +125,18 @@ const zipStorageKey = 'shipping-to-zip'
       },
   
     shippingServicesFinal () {
-      return this.shippingServices.filter(service => {
-        if (service.app_id !== 1253) return false
-        const customer = ecomPassport.getCustomer()
-        if (!customer || !customer.group) return false
-        const shippingLine = service.shipping_line
-        if (service.service_code === 'PICKUP') {
-          return shippingLine.delivery_instructions &&
-          shippingLine.delivery_instructions.includes(`(${customer.group})`)
-        }
-        return shippingLine.pick_up && service.service_code === customer.group
-      })
+      return this.shippingServices
+      // return this.shippingServices.filter(service => {
+      //   if (service.app_id !== 1253) return false
+      //   const customer = ecomPassport.getCustomer()
+      //   if (!customer || !customer.group) return false
+      //   const shippingLine = service.shipping_line
+      //   if (service.service_code === 'PICKUP') {
+      //     return shippingLine.delivery_instructions &&
+      //     shippingLine.delivery_instructions.includes(`(${customer.group})`)
+      //   }
+      //   return shippingLine.pick_up && service.service_code === customer.group
+      // })
     },
   
       productionDeadline () {
