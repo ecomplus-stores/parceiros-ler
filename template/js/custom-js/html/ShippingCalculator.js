@@ -137,7 +137,7 @@ const zipStorageKey = 'shipping-to-zip'
       //   }
       //   return shippingLine.pick_up && service.service_code === customer.group
       // })
-    },
+    }, 
   
       productionDeadline () {
         let maxDeadline = 0
