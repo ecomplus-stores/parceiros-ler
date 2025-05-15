@@ -2927,7 +2927,7 @@ body.logged-out{
 } 
 
 [data-service-code="1324"]{
-    + small{text-align:left}
+    + small{text-align:left!important;}
     > small{display: none!important;}
     
 }
