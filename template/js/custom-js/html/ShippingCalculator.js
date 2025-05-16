@@ -125,19 +125,18 @@ const zipStorageKey = 'shipping-to-zip'
       },
   
     shippingServicesFinal () {
-      return this.shippingServices
-      // return this.shippingServices.filter(service => {
-      //   if (service.app_id !== 1253) return false
-      //   const customer = ecomPassport.getCustomer()
-      //   if (!customer || !customer.group) return false
-      //   const shippingLine = service.shipping_line
-      //   if (service.service_code === 'PICKUP') {
-      //     return shippingLine.delivery_instructions &&
-      //     shippingLine.delivery_instructions.includes(`(${customer.group})`)
-      //   }
-      //   return shippingLine.pick_up && service.service_code === customer.group
-      // })
-    }, 
+      return this.shippingServices.filter(service => {
+        if (service.app_id !== 1253) return false
+        const customer = ecomPassport.getCustomer()
+        if (!customer || !customer.group) return false
+        const shippingLine = service.shipping_line
+        if (service.service_code === 'PICKUP') {
+          return shippingLine.delivery_instructions &&
+          shippingLine.delivery_instructions.includes(`(${customer.group})`)
+        }
+        return shippingLine.pick_up && service.service_code === customer.group
+      })
+    },
   
       productionDeadline () {
         let maxDeadline = 0
@@ -191,12 +190,6 @@ const zipStorageKey = 'shipping-to-zip'
               this.freeFromValue = freeShippingFromValue
             }
           })
-          //SUBI O NÍVEL DO FILTRO PARA EVITAR ESCAPAR ALGUMA OPÇÃO DE FRETE
-          console.log('a',this.shippingServices)
-          this.shippingServices = this.shippingServices.filter(service =>
-            ["1324"].includes(service.service_code)
-          )
-          console.log('b',this.shippingServices)
           if (!this.shippingServices.length) {
             if (!isRetry) {
               this.fetchShippingServices(true)
@@ -285,7 +278,7 @@ const zipStorageKey = 'shipping-to-zip'
           localStorage.setItem(zipStorageKey, this.localZipCode)
         }
         this.fetchShippingServices()
-      }, 
+      },
   
       setSelectedService (i) {
         if (this.canSelectServices) {
