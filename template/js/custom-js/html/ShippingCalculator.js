@@ -285,7 +285,7 @@ const zipStorageKey = 'shipping-to-zip'
           localStorage.setItem(zipStorageKey, this.localZipCode)
         }
         this.fetchShippingServices()
-      },
+      }, 
   
       setSelectedService (i) {
         if (this.canSelectServices) {
