@@ -1,0 +1,37 @@
+{
+  "icons": [
+    {
+      "src": "/icon_512x512.06bd6ea1539e237faeee23d942ef93ec.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_384x384.266f3d1dcb5aba2513ba8bb3f2ca2869.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_192x192.29830b796b4c0cfc1e54dc245471cf77.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_128x128.733fae12fa7f3eab31c6a488314c1084.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_96x96.421ee841cf52ad5aaa0b832b8d9c1eb2.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "name": "Loja Clássica",
+  "short_name": "Loja Clássica",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "ministerioler",
+  "background_color": "#ffffff",
+  "theme_color": "#084f53"
+}
